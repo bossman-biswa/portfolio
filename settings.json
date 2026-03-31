@@ -1,8 +1,3 @@
 {
-  "css.lint.unknownAtRules": "ignore",
-  "css.lint.compatibleVendorPrefixes": "ignore",
-  "css.lint.vendorPrefix": "ignore",
-  "[css]": {
-    "editor.formatOnSave": true
-  }
+  "css.lint.unknownAtRules": "ignore"
 }

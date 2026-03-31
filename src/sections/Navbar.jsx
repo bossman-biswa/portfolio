@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {motion} from 'motion/react';
+import { motion } from 'motion/react';
 function Navigation(){
     return <ul className="nav-ul">
         <li className="nav-li">
@@ -53,4 +53,4 @@ return(
     </div>
 )
 }
-export default Navbar;
+export default Navbar; 
