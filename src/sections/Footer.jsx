@@ -7,17 +7,17 @@ const Footer = () => {
   const socialLinks = [
     {
       name: 'Twitter',
-      url: '#',
+      url: 'https://twitter.com/biswa',
       icon: '𝕏',
     },
     {
       name: 'LinkedIn',
-      url: '#',
+      url: 'https://linkedin.com/in/biswa',
       icon: 'in',
     },
     {
       name: 'GitHub',
-      url: '#',
+      url: 'https://github.com/biswa',
       icon: 'gh',
     },
     {
@@ -28,7 +28,7 @@ const Footer = () => {
   ];
 
   const footerLinks = [
-    { label: 'Home', href: '#' },
+    { label: 'Home', href: '#hero' },
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
     { label: 'Contact', href: '#contact' },
@@ -89,6 +89,7 @@ const Footer = () => {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={link.name}
                     className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}

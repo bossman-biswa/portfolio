@@ -67,9 +67,9 @@ const Projects = () => {
                 <h3 className="headtext mb-3">{project.title}</h3>
                 <p className="subtext flex-grow mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, i) => (
+                  {project.tags.map((tag) => (
                     <span
-                      key={i}
+                      key={project.id + '-' + tag}
                       className="px-3 py-1 text-xs rounded-full bg-white/10 text-neutral-300 hover:bg-white/20 transition-colors">
                       {tag}
                     </span>

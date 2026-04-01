@@ -9,12 +9,12 @@ import Footer from "./sections/Footer";
 const App = () => {
   return <>
     <Navbar />
-    <div className="container mx-auto max-w-7xl">
-      <Hero />
-      <About />
-      <Projects />
-      <Contact />
-    </div>
+    <main className="container mx-auto max-w-7xl">
+      <section id="hero"><Hero /></section>
+      <section id="about"><About /></section>
+      <section id="projects"><Projects /></section>
+      <section id="contact"><Contact /></section>
+    </main>
     <Footer />
   </>;
 };

@@ -7,6 +7,7 @@ const Contact = () => {
     email: '',
     message: '',
   });
+  const [formStatus, setFormStatus] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,7 +19,16 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    // Simple validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus("Please fill in all fields.");
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+      setFormStatus("Please enter a valid email address.");
+      return;
+    }
+    setFormStatus("Message sent! (Demo only)");
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -88,6 +98,11 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="space-y-4">
+            {formStatus && (
+              <div className="text-sm mb-2" style={{ color: formStatus.includes('sent') ? '#57db96' : '#ea4884' }}>
+                {formStatus}
+              </div>
+            )}
             <div>
               <label htmlFor="name" className="field-label">
                 Name
