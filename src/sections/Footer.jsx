@@ -1,127 +1,114 @@
+import React, { memo } from 'react';
 import { motion } from 'motion/react';
-import React from 'react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const socialLinks = [
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/biswa',
-      icon: '𝕏',
-    },
-    {
-      name: 'LinkedIn',
-      url: 'https://linkedin.com/in/biswa',
-      icon: 'in',
-    },
-    {
-      name: 'GitHub',
-      url: 'https://github.com/biswa',
-      icon: 'gh',
-    },
-    {
-      name: 'Email',
-      url: 'mailto:biswa@example.com',
-      icon: '✉',
-    },
-  ];
-
   const footerLinks = [
     { label: 'Home', href: '#hero' },
     { label: 'About', href: '#about' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Education', href: '#education' },
     { label: 'Projects', href: '#projects' },
     { label: 'Contact', href: '#contact' },
   ];
 
+  const socialLinks = [
+    { name: 'LinkedIn', url: 'https://linkedin.com/in/biswa' },
+    { name: 'GitHub', url: 'https://github.com/biswa' },
+    { name: 'Email', url: 'mailto:biswa@example.com' },
+  ];
+
   return (
-    <footer className="border-t border-white/10">
-      <div className="c-space py-12 md:py-16">
+    <footer className="bg-[#0a0908] text-white border-t border-[color:var(--color-gold)]/20 relative z-10">
+      <div className="mx-auto max-w-7xl c-space py-12 md:py-16">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          viewport={{ once: true }}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {/* Brand */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}>
-              <h3 className="text-2xl font-bold mb-2">Biswa</h3>
-              <p className="subtext">
-                Full-stack developer crafting modern web experiences.
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          {/* Main Footer Row */}
+          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12">
+            {/* Brand & Summary */}
+            <div className="space-y-3 max-w-sm">
+              <a href="/" className="flex items-center gap-2.5 group">
+                <span className="w-2 h-2 rounded-full bg-[color:var(--color-gold)] group-hover:scale-125 transition-transform" />
+                <span className="font-montserrat text-lg font-bold tracking-[0.12em] text-white group-hover:text-[color:var(--color-gold-light)] transition-colors">
+                  BISWAKALYAN
+                </span>
+              </a>
+              <p className="font-oxygen text-sm text-white/70 font-light leading-relaxed">
+                Full-Stack & Mobile Developer specializing in high-performance web applications, 3D WebGL simulations, and modern software engineering.
               </p>
-            </motion.div>
+            </div>
 
-            {/* Navigation Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}>
-              <h4 className="font-medium mb-4">Navigation</h4>
-              <ul className="space-y-2">
-                {footerLinks.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link.href}
-                      className="text-neutral-400 hover:text-white transition-colors">
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}>
-              <h4 className="font-medium mb-4">Connect</h4>
-              <div className="flex flex-wrap gap-3">
-                {socialLinks.map((link, index) => (
-                  <motion.a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.name}
-                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    title={link.name}>
-                    {link.icon}
-                  </motion.a>
-                ))}
+            {/* Links Columns */}
+            <div className="flex flex-wrap gap-12 sm:gap-20">
+              {/* Quick Navigation */}
+              <div>
+                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-gold-light)] mb-4">
+                  Navigation
+                </p>
+                <ul className="space-y-2.5">
+                  {footerLinks.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        className="font-oxygen text-xs text-white/70 hover:text-[color:var(--color-gold-light)] transition-colors duration-200 font-light"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </motion.div>
+
+              {/* Connect */}
+              <div>
+                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-gold-light)] mb-4">
+                  Connect
+                </p>
+                <ul className="space-y-2.5">
+                  {socialLinks.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-oxygen text-xs text-white/70 hover:text-[color:var(--color-gold-light)] transition-colors duration-200 font-light"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Status */}
+              <div>
+                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-gold-light)] mb-4">
+                  Availability
+                </p>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+                  <span className="font-oxygen text-xs text-emerald-400 font-medium">Open for Internships 2026</span>
+                </div>
+                <p className="font-oxygen text-xs text-white/50 mt-2 font-light">ITER Bhubaneswar, Odisha</p>
+              </div>
+            </div>
           </div>
 
-          {/* Divider */}
-          <div className="border-t border-white/10 my-8"></div>
-
-          {/* Bottom */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-neutral-400 text-sm">
-              © {currentYear} Biswa. All rights reserved.
-            </p>
-            <p className="text-neutral-400 text-sm mt-4 md:mt-0">
-              Designed & Built with <span className="text-coral">♥</span> by Biswa
-            </p>
-          </motion.div>
+          {/* Bottom Copyright & Credit Strip */}
+          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-oxygen text-white/60 font-light">
+            <p>© 2023 — {currentYear} Biswakalyan. All rights reserved.</p>
+            <p className="text-white/50">Designed & Built by <span className="text-[color:var(--color-gold-light)] font-medium">Biswakalyan</span></p>
+          </div>
         </motion.div>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+export default memo(Footer);

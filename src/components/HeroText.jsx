@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FlipWords } from './FlipWords';
+import { LetterSwapWords } from './letterswap';
 import { motion } from 'motion/react';
 
 const HeroText = () => {
   const [isMobile, setIsMobile] = useState(false);
   const words = ["Secure", "Modern", "Scalable"];
 
-  // Detect mobile/desktop on mount and resize
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -17,19 +16,17 @@ const HeroText = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Mobile view styling
   const mobileClasses = {
     container: "z-10 my-16 px-4 text-center rounded-3xl bg-clip-text",
-    heading: "text-xl sm:text-2xl font-medium mb-4 leading-tight",
+    heading: "text-xl sm:text-2xl font-medium mb-4 leading-tight hero-gradient-text",
     subtitle: "text-2xl sm:text-3xl font-semibold text-neutral-200 mb-3 leading-snug",
     flipWords: "text-3xl sm:text-4xl font-black text-white mb-4",
     body: "text-base sm:text-lg font-medium text-neutral-400 mt-2",
   };
 
-  // Desktop view styling
   const desktopClasses = {
     container: "z-10 mt-40 text-left rounded-3xl bg-clip-text",
-    heading: "text-4xl font-medium mb-6",
+    heading: "text-4xl font-medium mb-6 hero-gradient-text",
     subtitle: "text-5xl font-semibold text-neutral-300 mb-4 leading-tight",
     flipWords: "text-8xl font-black text-white mb-6",
     body: "text-4xl font-medium text-neutral-400 mt-4",
@@ -63,9 +60,11 @@ const HeroText = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          <FlipWords
+          <LetterSwapWords
             words={words}
+            duration={3000}
             className={classes.flipWords}
+            textAlign={isMobile ? "center" : "left"}
           />
         </motion.div>
 

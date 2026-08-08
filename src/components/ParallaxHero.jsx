@@ -7,6 +7,7 @@ const ParallaxHero = () => {
   const [totalFrames] = useState(128); // Total frames in heroimg folder
   const [stopScrollPosition, setStopScrollPosition] = useState(2000);
   const { scrollY } = useScroll();
+  const heroOpacity = useMotionValue(1);
   const aboutSectionRef = useRef(null);
 
   // Detect mobile on mount and resize
@@ -38,7 +39,7 @@ const ParallaxHero = () => {
 
     // Find and observe the About section (wait a bit for DOM to be ready)
     const findAboutSection = () => {
-      const aboutElement = document.querySelector('section:has(.text-heading)');
+      const aboutElement = document.querySelector('#about');
       if (aboutElement) {
         observer.observe(aboutElement);
         aboutSectionRef.current = aboutElement;
@@ -79,6 +80,24 @@ const ParallaxHero = () => {
     return unsubscribe;
   }, [frameProgress, totalFrames]);
 
+  // Fade out parallax background before About section so it never bleeds into later sections
+  useEffect(() => {
+    const updateOpacity = (latest) => {
+      const fadeStart = Math.max(stopScrollPosition - 300, 0);
+      if (latest >= stopScrollPosition) {
+        heroOpacity.set(0);
+      } else if (latest >= fadeStart && stopScrollPosition > fadeStart) {
+        heroOpacity.set(1 - (latest - fadeStart) / (stopScrollPosition - fadeStart));
+      } else {
+        heroOpacity.set(1);
+      }
+    };
+
+    updateOpacity(scrollY.get());
+    const unsubscribe = scrollY.on('change', updateOpacity);
+    return unsubscribe;
+  }, [scrollY, stopScrollPosition, heroOpacity]);
+
   // Only enable mouse tracking on desktop
   useEffect(() => {
     if (isMobile) return;
@@ -99,10 +118,8 @@ const ParallaxHero = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-full h-screen -z-10 overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      className="fixed top-0 left-0 w-full h-screen -z-10 overflow-hidden pointer-events-none"
+      style={{ opacity: heroOpacity }}
     >
       {/* Parallax Background Image with Scroll Tracking */}
       <motion.div
