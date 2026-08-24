@@ -1,114 +1,69 @@
-import React, { memo } from 'react';
-import { motion } from 'motion/react';
+import React from 'react';
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  const footerLinks = [
-    { label: 'Home', href: '#hero' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Education', href: '#education' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
-  ];
-
-  const socialLinks = [
-    { name: 'LinkedIn', url: 'https://linkedin.com/in/biswa' },
-    { name: 'GitHub', url: 'https://github.com/biswa' },
-    { name: 'Email', url: 'mailto:biswa@example.com' },
-  ];
-
+export default function Footer() {
   return (
-    <footer className="bg-[#0a0908] text-white border-t border-[color:var(--color-gold)]/20 relative z-10">
-      <div className="mx-auto max-w-7xl c-space py-12 md:py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="space-y-12"
-        >
-          {/* Main Footer Row */}
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12">
-            {/* Brand & Summary */}
-            <div className="space-y-3 max-w-sm">
-              <a href="/" className="flex items-center gap-2.5 group">
-                <span className="w-2 h-2 rounded-full bg-[color:var(--color-gold)] group-hover:scale-125 transition-transform" />
-                <span className="font-montserrat text-lg font-bold tracking-[0.12em] text-white group-hover:text-[color:var(--color-gold-light)] transition-colors">
-                  BISWAKALYAN
-                </span>
-              </a>
-              <p className="font-oxygen text-sm text-white/70 font-light leading-relaxed">
-                Full-Stack & Mobile Developer specializing in high-performance web applications, 3D WebGL simulations, and modern software engineering.
-              </p>
-            </div>
-
-            {/* Links Columns */}
-            <div className="flex flex-wrap gap-12 sm:gap-20">
-              {/* Quick Navigation */}
-              <div>
-                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-gold-light)] mb-4">
-                  Navigation
-                </p>
-                <ul className="space-y-2.5">
-                  {footerLinks.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        href={link.href}
-                        className="font-oxygen text-xs text-white/70 hover:text-[color:var(--color-gold-light)] transition-colors duration-200 font-light"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Connect */}
-              <div>
-                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-gold-light)] mb-4">
-                  Connect
-                </p>
-                <ul className="space-y-2.5">
-                  {socialLinks.map((link) => (
-                    <li key={link.name}>
-                      <a
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-oxygen text-xs text-white/70 hover:text-[color:var(--color-gold-light)] transition-colors duration-200 font-light"
-                      >
-                        {link.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Status */}
-              <div>
-                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-gold-light)] mb-4">
-                  Availability
-                </p>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
-                  <span className="font-oxygen text-xs text-emerald-400 font-medium">Open for Internships 2026</span>
-                </div>
-                <p className="font-oxygen text-xs text-white/50 mt-2 font-light">ITER Bhubaneswar, Odisha</p>
-              </div>
+    <footer className="kage-foot">
+      <div className="kage-foot-grid">
+        {/* Brand Info */}
+        <div className="kage-foot-brand">
+          <div className="kage-brand">
+            <svg viewBox="0 0 34 34" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="34" height="34" fill="#05070a" />
+              <circle cx="17" cy="18" r="8.5" fill="#e0231c" />
+              <rect x="4" y="9" width="26" height="2.8" fill="#dfe7e0" />
+              <rect x="7" y="14" width="20" height="2.2" fill="#dfe7e0" />
+            </svg>
+            <div className="kage-brand-tx">
+              <b>BISWAKALYAN PALAI</b>
+              <i className="jp-label">ポートフォリオ 2026</i>
             </div>
           </div>
+          <p>
+            Junior Software & Full-Stack Developer at ITER Bhubaneswar (B.Tech CS & IT 2023 — 2027). Dedicated to engineering high-performance WebGL & full-stack software.
+          </p>
+        </div>
 
-          {/* Bottom Copyright & Credit Strip */}
-          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-oxygen text-white/60 font-light">
-            <p>© 2023 — {currentYear} Biswakalyan. All rights reserved.</p>
-            <p className="text-white/50">Designed & Built by <span className="text-[color:var(--color-gold-light)] font-medium">Biswakalyan</span></p>
-          </div>
-        </motion.div>
+        {/* Navigation */}
+        <div>
+          <h4>NAVIGATION</h4>
+          <ul>
+            <li><a href="#about">01 About</a></li>
+            <li><a href="#projects">02 Projects</a></li>
+            <li><a href="#skills">03 Skills</a></li>
+            <li><a href="#education">04 Academics</a></li>
+            <li><a href="#contact">05 Contact</a></li>
+          </ul>
+        </div>
+
+        {/* Core Stack */}
+        <div>
+          <h4>TECH STACK</h4>
+          <ul>
+            <li><a href="#skills">Java & JavaScript</a></li>
+            <li><a href="#skills">React & React Native</a></li>
+            <li><a href="#skills">Node.js & Express</a></li>
+            <li><a href="#skills">Three.js & WebGL</a></li>
+            <li><a href="#skills">MongoDB & MySQL</a></li>
+          </ul>
+        </div>
+
+        {/* Credentials */}
+        <div>
+          <h4>CREDENTIALS</h4>
+          <ul>
+            <li><a href="#education">B.Tech CS & IT (ITER)</a></li>
+            <li><a href="#skills">Full-Stack (Coursera)</a></li>
+            <li><a href="#skills">Frontend (Udemy)</a></li>
+            <li><a href="#skills">UI/UX (IIT Bhubaneswar)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Base Bar */}
+      <div className="kage-foot-base">
+        <div>© 2023 — 2027 BISWAKALYAN PALAI. ALL RIGHTS RESERVED.</div>
+        <div>BHUBANESWAR, ODISHA, INDIA</div>
       </div>
     </footer>
   );
-};
-
-export default memo(Footer);
+}

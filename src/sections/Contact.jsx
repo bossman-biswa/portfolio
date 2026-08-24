@@ -1,183 +1,83 @@
-import React, { useState, useCallback, memo } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  const [formStatus, setFormStatus] = useState({ type: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormStatus({ type: '', message: '' });
-
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setFormStatus({ type: 'error', message: 'Please fill in all fields.' });
-      return;
-    }
-
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
-      setFormStatus({ type: 'error', message: 'Please enter a valid email address.' });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    // Simulate async submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' });
-      setFormData({ name: '', email: '', message: '' });
-    }, 600);
-  };
-
-  const contactLinks = [
-    { label: 'Email', value: 'biswa@example.com', href: 'mailto:biswa@example.com' },
-    { label: 'LinkedIn', value: 'linkedin.com/in/biswakalyan', href: 'https://linkedin.com/in/biswa' },
-    { label: 'GitHub', value: 'github.com/biswakalyan', href: 'https://github.com/biswa' },
-  ];
-
+export default function Contact() {
   return (
-    <section id="contact" className="minimal-theme warm-dark c-space section-spacing relative z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
+    <section id="contact" className="fin-sec">
+      <div className="eyebrow">
+        <span>CHAPTER IV &bull; ETERNITY</span>
+      </div>
+
+      <motion.h2
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="display-title"
       >
-        <p className="font-crimson section-label text-xs uppercase tracking-[0.2em] text-white/50 mb-2">Contact</p>
-        <h2 className="font-crimson text-3xl md:text-5xl font-semibold mb-4 text-white">Get In Touch</h2>
-        <p className="font-oxygen subtext max-w-2xl mb-16 text-white/70 font-light">
-          Have a project in mind, an internship opportunity, or want to collaborate? I'd love to hear from you.
-        </p>
+        WHERE STILLNESS
+        <br />
+        MEETS ACTION.
+      </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <div className="space-y-8">
-              {contactLinks.map((link, index) => (
-                <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.08 }}
-                  viewport={{ once: true }}
-                  className="group"
-                >
-                  <p className="font-oxygen text-xs uppercase tracking-wider text-white/50 mb-1">{link.label}</p>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-oxygen text-base md:text-lg font-medium text-white group-hover:text-[color:var(--color-gold-light)] transition-colors duration-200"
-                  >
-                    {link.value}
-                  </a>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.15 }}
+      >
+        Currently seeking software engineering and full-stack development internship opportunities. Open for technical collaborations, application development, and engineering inquiries.
+      </motion.p>
 
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-            noValidate
-          >
-            {formStatus.message && (
-              <div
-                aria-live="polite"
-                className={`p-4 rounded-xs text-xs font-mono border ${
-                  formStatus.type === 'success'
-                    ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300'
-                    : 'bg-rose-500/10 border-rose-500/40 text-rose-300'
-                }`}
-              >
-                {formStatus.message}
-              </div>
-            )}
+      {/* Interactive Pill CTA */}
+      <motion.a
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        href="mailto:biswa.palai2004@gmail.com"
+        className="kage-cta"
+      >
+        <i />
+        <span>SEND DIRECT EMAIL</span>
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M4 12L12 4M12 4H5M12 4V11"
+            stroke="#dfe7e0"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </motion.a>
 
-            <div>
-              <label htmlFor="contact-name" className="field-label font-oxygen text-white/70 text-xs uppercase tracking-wider">
-                Name
-              </label>
-              <input
-                id="contact-name"
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Your name"
-                className="field-input field-input-focus font-oxygen text-white border-white/20 placeholder-white/30"
-                required
-                autoComplete="name"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="contact-email" className="field-label font-oxygen text-white/70 text-xs uppercase tracking-wider">
-                Email
-              </label>
-              <input
-                id="contact-email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="your@email.com"
-                className="field-input field-input-focus font-oxygen text-white border-white/20 placeholder-white/30"
-                required
-                autoComplete="email"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="contact-message" className="field-label font-oxygen text-white/70 text-xs uppercase tracking-wider">
-                Message
-              </label>
-              <textarea
-                id="contact-message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Your message"
-                rows="4"
-                className="field-input field-input-focus font-oxygen text-white border-white/20 placeholder-white/30 resize-none"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="font-montserrat px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] bg-white text-[#2a2520] rounded-full hover:bg-[color:var(--color-gold-light)] hover:text-black transition-all duration-300 shadow-md cursor-pointer disabled:opacity-50"
-            >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
-            </button>
-          </motion.form>
+      {/* Direct Contact Metadata */}
+      <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 text-left max-w-2xl w-full border-t border-[var(--line-soft)] pt-8">
+        <div>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] block mb-1">
+            EMAIL
+          </span>
+          <a href="mailto:biswa.palai2004@gmail.com" className="text-xs font-mono text-[var(--bone)] hover:text-[var(--vermilion)] transition-colors">
+            biswa.palai2004@gmail.com
+          </a>
         </div>
-      </motion.div>
+        <div>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] block mb-1">
+            PHONE
+          </span>
+          <a href="tel:9861508628" className="text-xs font-mono text-[var(--bone)] hover:text-[var(--vermilion)] transition-colors">
+            +91 9861508628
+          </a>
+        </div>
+        <div>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] block mb-1">
+            LOCATION
+          </span>
+          <span className="text-xs text-[var(--bone)] font-mono">
+            ITER, Bhubaneswar
+          </span>
+        </div>
+      </div>
     </section>
   );
-};
-
-export default memo(Contact);
+}

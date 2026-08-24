@@ -1,88 +1,122 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
-function Navigation() {
-  const links = [
-    { name: 'Home', href: '#hero' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Education', href: '#education' },
-    { name: 'Projects', href: '#projects' },
+export default function Navbar() {
+  const [isStuck, setIsStuck] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsStuck(window.scrollY > 40);
+
+      const sections = ['hero', 'about', 'projects', 'techstack', 'skills', 'education', 'contact'];
+      for (const sec of sections) {
+        const el = document.getElementById(sec);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 240 && rect.bottom >= 240) {
+            setActiveSection(sec);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'about', label: '01 ABOUT', alt: '概要' },
+    { id: 'projects', label: '02 PROJECTS', alt: '作品' },
+    { id: 'techstack', label: '03 TECH STACK', alt: '技術基盤' },
+    { id: 'skills', label: '04 SKILLS', alt: '技術' },
+    { id: 'education', label: '05 EDUCATION', alt: '学歴' },
+    { id: 'contact', label: '06 CONTACT', alt: '連絡' },
   ];
 
-  return (
-    <ul className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-      {links.map((link) => (
-        <li key={link.name}>
-          <a
-            href={link.href}
-            className="font-montserrat text-xs uppercase tracking-[0.25em] text-white/70 hover:text-[color:var(--color-gold-light)] transition-colors duration-300 relative py-1 group font-medium"
-          >
-            {link.name}
-            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[color:var(--color-gold)] transition-all duration-300 group-hover:w-full" />
-          </a>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const scrollTo = (id) => {
+    setMenuOpen(false);
+    const el = document.getElementById(id);
+    if (el) {
+      const topOffset = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({
+        top: topOffset,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 w-full backdrop-blur-xl bg-[#0a0908]/80 border-b border-[color:var(--color-gold)]/20 shadow-2xl">
-      <div className="mx-auto c-space max-w-7xl">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Luxury Brandmark */}
-          <a href="/" className="flex items-center gap-3 group">
-            <span className="w-2 h-2 rounded-full bg-[color:var(--color-gold)] group-hover:scale-125 transition-transform" />
-            <span className="font-montserrat text-lg sm:text-xl font-semibold tracking-[0.1em] text-white group-hover:text-[color:var(--color-gold-light)] transition-colors">
-              BISWAKALYAN
-            </span>
-          </a>
-
-          {/* Desktop Nav */}
-          <nav className="hidden sm:flex items-center gap-8">
-            <Navigation />
-            <a
-              href="#contact"
-              className="font-montserrat px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--color-gold-light)] border border-[color:var(--color-gold)]/40 rounded-full hover:bg-[color:var(--color-gold)] hover:text-black transition-all duration-300 shadow-md shadow-[color:var(--color-gold)]/10"
-            >
-              Hire Me
-            </a>
-          </nav>
-
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle navigation menu"
-            className="flex cursor-pointer text-white/80 hover:text-[color:var(--color-gold)] focus:outline-none sm:hidden"
-          >
-            <img
-              src={isOpen ? "assets/close.svg" : "assets/menu.svg"}
-              className="w-6 h-6 invert"
-              alt={isOpen ? "Close menu" : "Open menu"}
-            />
-          </button>
+    <nav className={`kage-nav ${isStuck ? 'stuck' : ''}`}>
+      {/* Brandmark */}
+      <a href="#hero" onClick={(e) => { e.preventDefault(); scrollTo('hero'); }} className="kage-brand">
+        <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="34" height="34" fill="#05070a" />
+          <circle cx="17" cy="18" r="8.5" fill="#e0231c" />
+          <rect x="4" y="9" width="26" height="2.8" fill="#dfe7e0" />
+          <rect x="7" y="14" width="20" height="2.2" fill="#dfe7e0" />
+        </svg>
+        <div className="kage-brand-tx">
+          <b>BISWAKALYAN</b>
+          <i className="jp-label">フルスタック・エンジニア</i>
         </div>
+      </a>
+
+      {/* Desktop Links with Roll Reveal Hover Effect */}
+      <div className="kage-nav-links">
+        {navItems.map((item) => (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollTo(item.id);
+            }}
+            className={`kage-nav-link ${activeSection === item.id ? 'on' : ''}`}
+          >
+            <span>{item.label}</span>
+            <span className="alt jp-label">{item.alt}</span>
+          </a>
+        ))}
+      </div>
+
+      {/* Mobile Burger */}
+      <div
+        className={`kage-burger md:hidden ${menuOpen ? 'active' : ''}`}
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <i />
+        <i />
       </div>
 
       {/* Mobile Drawer */}
-      {isOpen && (
-        <motion.div
-          className="block overflow-hidden text-center sm:hidden bg-[#0a0908]/95 border-t border-[color:var(--color-gold)]/20 py-6"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <nav className="flex justify-center">
-            <Navigation />
-          </nav>
-        </motion.div>
-      )}
-    </header>
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-x-0 top-[84px] bg-[#05070a]/96 backdrop-blur-2xl border-b border-[var(--line-soft)] p-6 flex flex-col gap-4 md:hidden z-50"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo(item.id);
+                }}
+                className="text-sm font-medium tracking-widest text-[var(--bone)] py-2 border-b border-[var(--line-soft)] flex justify-between"
+              >
+                <span>{item.label}</span>
+                <span className="text-xs text-[var(--muted)] jp-label">{item.alt}</span>
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
   );
-};
-
-export default Navbar;
+}

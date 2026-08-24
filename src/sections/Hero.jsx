@@ -1,255 +1,140 @@
-import React, { useState, useEffect } from 'react';
-import ParallaxHero from '../components/ParallaxHero';
-import ParticleSwarm from '../components/ParticleSwarm';
-import TiltCard from '../components/TiltCard';
-import { motion, AnimatePresence } from 'motion/react';
+import React from 'react';
+import { motion } from 'motion/react';
 
-const Hero = () => {
-    const [isMobile, setIsMobile] = useState(false);
-    const [taglineIndex, setTaglineIndex] = useState(0);
+export default function Hero() {
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const topOffset = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({
+        top: topOffset,
+        behavior: 'smooth',
+      });
+    }
+  };
 
-    const taglines = [
-        "Architecting Digital Elegance",
-        "Building Scalable Full-Stack Systems",
-        "Crafting Interactive 3D WebGL Experiences",
-    ];
+  return (
+    <section id="hero" className="kage-hero">
+      {/* Side Kanji / Vertical Typography */}
+      <div className="kage-hero-side">
+        <div className="v jp-label">フルスタック開発者</div>
+      </div>
 
-    useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
+      {/* Hero Top Content */}
+      <div className="kage-hero-top">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="eyebrow"
+        >
+          <span className="dot" />
+          <span>00 // PERSPECTIVE &bull; ITER BHUBANESWAR 2023 — 2027</span>
+        </motion.div>
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTaglineIndex((prev) => (prev + 1) % taglines.length);
-        }, 3200);
-        return () => clearInterval(interval);
-    }, [taglines.length]);
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="display-title h-hero"
+        >
+          WHERE CODE
+          <br />
+          REVEALS THE UNSEEN.
+        </motion.h1>
 
-    const luxuryHighlights = [
-        'FULL-STACK ARCHITECTURE',
-        '3D WEBGL SIMULATIONS',
-        'REACT NATIVE MOBILE',
-        'NODE.JS DISTRIBUTED SYSTEMS',
-        'DOCKER & CONTAINERIZATION',
-        'B.TECH COMPUTER SCIENCE @ ITER',
-    ];
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="body-lg kage-hero-sub"
+        >
+          Biswakalyan Palai — Junior Software & Full-Stack Developer specializing in scalable distributed architectures, interactive WebGL experiences, and clean full-stack applications.
+        </motion.p>
+      </div>
 
-    const titleLetters = "Biswakalyan".split("");
+      <div className="kage-hero-spacer" />
 
-    return (
-        <div className="relative overflow-hidden bg-[#0a0908] min-h-screen flex flex-col justify-between pt-24 sm:pt-28">
-            <ParallaxHero />
-            <ParticleSwarm isMobile={isMobile} />
+      {/* Floating Peek Window with Cinematic Background Image */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 1.0, delay: 0.6 }}
+        className="kage-peek"
+        onClick={() => scrollTo('projects')}
+      >
+        <div className="kage-peek-fr relative overflow-hidden group border border-[#e0231c]/40 rounded-md shadow-2xl">
+          {/* Background Image Layer */}
+          <div
+            className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700 ease-out"
+            style={{
+              backgroundImage: `url('/assets/kage_cinematic_bg.png')`,
+            }}
+          />
 
-            {/* Ambient Gold & Lavender Glow Orbs */}
-            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[color:var(--color-gold)]/10 rounded-full blur-[140px] pointer-events-none z-0" />
-            <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-[color:var(--color-hero-accent)]/10 rounded-full blur-[140px] pointer-events-none z-0" />
+          {/* Dark Scrim Overlays for High Legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#05070a] via-[#05070a]/60 to-transparent" />
+          <div className="absolute inset-0 bg-radial from-[#e0231c]/20 via-transparent to-[#05070a]/90" />
 
-            {/* Main Hero Container */}
-            <div className="relative z-10 mx-auto c-space max-w-7xl w-full flex-1 flex flex-col justify-center py-8 lg:py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Glowing Indicator Mote */}
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#05070a]/80 border border-[#e0231c]/40 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#e0231c] animate-ping" />
+            <span className="text-[8px] font-mono text-[#dfe7e0] uppercase tracking-widest">LIVE PREVIEW</span>
+          </div>
 
-                    {/* Left Column: Luxury Typography & CTAs */}
-                    <div className="lg:col-span-7 space-y-6">
-                        <motion.div
-                            initial={{ opacity: 0, y: 15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="inline-flex items-center gap-2 px-3 py-1 border border-[color:var(--color-gold)]/30 rounded-full bg-[color:var(--color-gold)]/5 backdrop-blur-sm"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--color-gold)]" />
-                            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[color:var(--color-gold-light)]">
-                                Full-Stack & 3D WebGL Developer
-                            </span>
-                        </motion.div>
-
-                        {/* Animated Title & Tagline */}
-                        <div className="space-y-1">
-                            <motion.h1
-                                className="font-serif-luxury text-5xl sm:text-7xl lg:text-8xl font-light tracking-tight leading-[0.9] text-white flex flex-wrap items-center cursor-default select-none"
-                                initial="hidden"
-                                animate="visible"
-                            >
-                                {titleLetters.map((char, index) => (
-                                    <motion.span
-                                        key={index}
-                                        variants={{
-                                            hidden: { opacity: 0, y: 40, rotateX: -60 },
-                                            visible: { opacity: 1, y: 0, rotateX: 0 }
-                                        }}
-                                        transition={{ duration: 0.6, delay: 0.3 + index * 0.04, ease: [0.215, 0.61, 0.355, 1] }}
-                                        className="inline-block hover:text-[color:var(--color-gold-light)] hover:-translate-y-2 transition-all duration-300 transform-gpu"
-                                    >
-                                        {char}
-                                    </motion.span>
-                                ))}
-                                <motion.span
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ duration: 0.5, delay: 0.8 }}
-                                    className="text-gold-gradient inline-block animate-pulse ml-1"
-                                >
-                                    .
-                                </motion.span>
-                            </motion.h1>
-
-                            {/* Rotating Tagline with Satisfy font */}
-                            <div className="h-12 sm:h-14 overflow-hidden relative pt-2">
-                                <AnimatePresence mode="wait">
-                                    <motion.p
-                                        key={taglineIndex}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.55, ease: "easeInOut" }}
-                                        className="font-satisfy text-3xl sm:text-4xl lg:text-5xl text-[color:var(--color-gold-light)] tracking-wide absolute left-0 drop-shadow-md"
-                                    >
-                                        {taglines[taglineIndex]}
-                                    </motion.p>
-                                </AnimatePresence>
-                            </div>
-                        </div>
-
-                        <motion.p
-                            initial={{ opacity: 0, y: 15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.9 }}
-                            className="font-baskerville text-sm sm:text-base text-white/70 max-w-xl font-light leading-relaxed pt-2"
-                        >
-                            B.Tech Computer Science student seeking internship opportunities. Specialized in building high-performance full-stack web platforms, mobile applications, and interactive 3D simulations.
-                        </motion.p>
-
-                        {/* CTA Buttons & Stats */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.6 }}
-                            className="pt-4 space-y-8"
-                        >
-                            <div className="flex flex-wrap items-center gap-4">
-                                <a
-                                    href="#projects"
-                                    className="font-montserrat px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] bg-[color:var(--color-gold)] text-black rounded-full hover:bg-[color:var(--color-gold-light)] hover:scale-105 transition-all duration-300 shadow-lg shadow-[color:var(--color-gold)]/20"
-                                >
-                                    Explore Works →
-                                </a>
-                                <a
-                                    href="#contact"
-                                    className="font-montserrat px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white border border-white/25 rounded-full hover:border-[color:var(--color-gold)] hover:text-[color:var(--color-gold-light)] hover:scale-105 transition-all duration-300"
-                                >
-                                    Get In Touch
-                                </a>
-                            </div>
-
-                            {/* Luxury Stat Callouts */}
-                            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-white/10 max-w-lg">
-                                <div>
-                                    <p className="font-serif-luxury text-2xl sm:text-3xl text-gold-gradient">25K+</p>
-                                    <p className="text-[10px] uppercase tracking-wider text-white/50">WebGL Particles</p>
-                                </div>
-                                <div>
-                                    <p className="font-serif-luxury text-2xl sm:text-3xl text-gold-gradient">3rd Yr</p>
-                                    <p className="text-[10px] uppercase tracking-wider text-white/50">B.Tech CS @ ITER</p>
-                                </div>
-                                <div>
-                                    <p className="font-serif-luxury text-2xl sm:text-3xl text-gold-gradient">100%</p>
-                                    <p className="text-[10px] uppercase tracking-wider text-white/50">Scalable Code</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Right Column: Interactive Luxury Glass Spec Card */}
-                    <div className="lg:col-span-5">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, delay: 0.4 }}
-                        >
-                            <TiltCard className="!bg-[#0c0b0a]/90 backdrop-blur-2xl border border-[color:var(--color-gold)]/30 rounded-md p-8 sm:p-9 space-y-7 shadow-2xl text-white transition-colors duration-500 hover:border-[color:var(--color-gold)]/60">
-                                {/* Header Row */}
-                                <div className="flex items-center justify-between pb-4 border-b border-[color:var(--color-gold)]/20">
-                                    <div className="flex items-center gap-2.5">
-                                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                                        <span className="font-montserrat text-xs font-medium uppercase tracking-[0.2em] text-emerald-400">
-                                            STATUS: OPEN FOR INTERNSHIPS
-                                        </span>
-                                    </div>
-                                    <span className="font-montserrat text-xs tracking-widest text-[color:var(--color-gold-light)]/80 font-medium">
-                                        2023 — 2027
-                                    </span>
-                                </div>
-
-                                {/* Body Content */}
-                                <div className="space-y-6 text-white/90">
-                                    <div>
-                                        <p className="font-montserrat text-[10px] font-semibold uppercase tracking-[0.25em] text-[color:var(--color-gold-light)]/60 mb-1">
-                                            ENGINEERING PROFILE
-                                        </p>
-                                        <p className="font-serif-luxury text-2xl sm:text-3xl text-white font-light tracking-wide leading-tight">
-                                            Junior Software & Full-Stack Developer
-                                        </p>
-                                    </div>
-
-                                    <div>
-                                        <p className="font-montserrat text-[10px] font-semibold uppercase tracking-[0.25em] text-[color:var(--color-gold-light)]/60 mb-3">
-                                            TECHNICAL CAPABILITIES
-                                        </p>
-                                        <ul className="space-y-2.5 font-oxygen text-sm font-light text-white/80">
-                                            <li className="flex items-center gap-3 group/item">
-                                                <span className="text-[color:var(--color-gold)] text-xs group-hover/item:scale-125 transition-transform duration-200">◆</span>
-                                                <span className="group-hover/item:text-white transition-colors">React, Node.js, Express & Next.js</span>
-                                            </li>
-                                            <li className="flex items-center gap-3 group/item">
-                                                <span className="text-[color:var(--color-gold)] text-xs group-hover/item:scale-125 transition-transform duration-200">◆</span>
-                                                <span className="group-hover/item:text-white transition-colors">Three.js 3D WebGL Swarm Simulations</span>
-                                            </li>
-                                            <li className="flex items-center gap-3 group/item">
-                                                <span className="text-[color:var(--color-gold)] text-xs group-hover/item:scale-125 transition-transform duration-200">◆</span>
-                                                <span className="group-hover/item:text-white transition-colors">React Native Mobile Applications</span>
-                                            </li>
-                                            <li className="flex items-center gap-3 group/item">
-                                                <span className="text-[color:var(--color-gold)] text-xs group-hover/item:scale-125 transition-transform duration-200">◆</span>
-                                                <span className="group-hover/item:text-white transition-colors">MongoDB, MySQL, GraphQL & Docker</span>
-                                            </li>
-                                            <li className="flex items-center gap-3 group/item">
-                                                <span className="text-[color:var(--color-gold)] text-xs group-hover/item:scale-125 transition-transform duration-200">◆</span>
-                                                <span className="group-hover/item:text-white transition-colors">Java, JavaScript & System Architecture</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                {/* Footer Bar */}
-                                <div className="pt-4 border-t border-[color:var(--color-gold)]/20 flex items-center justify-between font-montserrat text-[10px] uppercase tracking-widest text-white/40">
-                                    <span>INSTITUTE: ITER, BHUBANESWAR</span>
-                                    <span className="text-[color:var(--color-gold-light)] font-semibold tracking-widest">EDITION NO. 01</span>
-                                </div>
-                            </TiltCard>
-                        </motion.div>
-                    </div>
-
-                </div>
+          {/* Foreground Overlay Content */}
+          <div className="absolute inset-0 flex items-center justify-center p-5 text-center bg-black/40 backdrop-blur-[2px] transition-colors duration-500 group-hover:bg-black/20">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#e0231c]/30 border border-[#e0231c]/50 mb-2 shadow-lg backdrop-blur-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#e0231c] animate-pulse" />
+                <span className="text-[9px] uppercase tracking-[0.22em] text-[#dfe7e0] font-semibold">
+                  FEATURED WORK
+                </span>
+              </div>
+              <h3 className="text-sm font-medium tracking-wide text-white group-hover:text-[#ff5a3c] transition-colors duration-300 drop-shadow-md">
+                Rate Limiter & WebGL Architecture
+              </h3>
+              <p className="text-[11px] text-[#c0c9c2] mt-1 font-light tracking-wider drop-shadow">
+                Token Bucket Engine & Interactive 3D World
+              </p>
             </div>
-
-            {/* Bottom Luxury Marquee Ribbon */}
-            <div className="relative z-10 border-t border-[color:var(--color-gold)]/20 bg-[#0f0d0b]/90 py-3 overflow-hidden select-none backdrop-blur-md">
-                <div className="animate-marquee gap-10 items-center text-xs font-mono font-medium tracking-[0.25em] text-[color:var(--color-gold-light)]/70">
-                    {[...luxuryHighlights, ...luxuryHighlights].map((item, idx) => (
-                        <span key={idx} className="flex items-center gap-4 hover:text-[color:var(--color-gold-light)] transition-colors cursor-pointer whitespace-nowrap">
-                            <span className="text-[color:var(--color-gold)]">◆</span>
-                            {item}
-                        </span>
-                    ))}
-                </div>
-            </div>
+          </div>
         </div>
-    );
-};
 
-export default Hero;
+        <div className="kage-peek-cap mt-2 flex justify-between items-center text-xs">
+          <b className="jp-label text-[10px] text-[#e0231c] font-medium tracking-widest">作品プレビュー</b>
+          <i className="not-italic text-[10px] tracking-widest text-[#aab4ad]">CHAPTER II PREVIEW &rarr;</i>
+        </div>
+      </motion.div>
+
+      {/* Hero Foot (Scroll Cue + Chapter Index Chips) */}
+      <div className="kage-hero-foot">
+        <div className="kage-hero-cue">
+          <span>SCROLL TO DISCOVER</span>
+          <div className="track">
+            <i />
+          </div>
+        </div>
+
+        <div className="kage-chapters">
+          <div className="kage-chip" onClick={() => scrollTo('about')}>
+            <span className="num">01</span>
+            <span className="tx-title">ABOUT</span>
+          </div>
+          <div className="kage-chip" onClick={() => scrollTo('projects')}>
+            <span className="num">02</span>
+            <span className="tx-title">PROJECTS</span>
+          </div>
+          <div className="kage-chip" onClick={() => scrollTo('skills')}>
+            <span className="num">03</span>
+            <span className="tx-title">SKILLS</span>
+          </div>
+          <div className="kage-chip" onClick={() => scrollTo('contact')}>
+            <span className="num">04</span>
+            <span className="tx-title">CONTACT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
